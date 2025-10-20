@@ -9,6 +9,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -17,6 +18,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = "com.smartlogi")
 @EnableJpaRepositories(basePackages = "com.smartlogi.repository")
 @EnableTransactionManagement
+@EnableWebMvc
 public class AppConfig {
 
     @Bean

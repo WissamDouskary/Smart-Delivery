@@ -60,4 +60,15 @@ public class Livreur {
     public void setVehicule(String vehicule) {
         this.vehicule = vehicule;
     }
+
+    @Override
+    public String toString() {
+        return "Livreur{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", vehicule='" + vehicule + '\'' +
+                '}';
+    }
 }
