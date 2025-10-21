@@ -1,8 +1,20 @@
 package com.smartlogi.repository;
 
 import com.smartlogi.model.Livreur;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.List;
 
-@Repository
-public interface LivreurRepository extends JpaRepository<Livreur, Long> {}
+public class LivreurRepository {
+
+    private EntityManager entityManager;
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public List<Livreur> findAll() {
+        return entityManager.createQuery("SELECT l FROM Livreur l", Livreur.class)
+                .getResultList();
+    }
+}

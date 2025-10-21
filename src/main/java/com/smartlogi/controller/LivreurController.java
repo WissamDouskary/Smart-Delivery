@@ -2,26 +2,25 @@ package com.smartlogi.controller;
 
 import com.smartlogi.model.Livreur;
 import com.smartlogi.service.LivreurService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/livreurs")
-public class LivreurController{
+public class LivreurController implements Controller {
     private LivreurService livreurService;
 
-    @Autowired
     public void setLivreurService(LivreurService livreurService) {
         this.livreurService = livreurService;
     }
 
-    @GetMapping
-    public List<Livreur> getAllLivreurs(){
-        return livreurService.findAll();
+    @Override
+    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        List<Livreur> livreurs = livreurService.findAll();
+        ModelAndView mav = new ModelAndView("jsonView");
+        mav.addObject("livreurs", livreurs);
+        return mav;
     }
 }

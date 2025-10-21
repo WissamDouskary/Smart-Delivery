@@ -1,8 +1,18 @@
 package com.smartlogi.repository;
 
 import com.smartlogi.model.Colis;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import jakarta.persistence.EntityManager;
 
-@Repository
-public interface ColisRepository extends JpaRepository<Colis, Long> {}
+import java.util.List;
+
+public class ColisRepository {
+    private EntityManager entityManager;
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public List<Colis> findAll(){
+        return entityManager.createQuery("FROM Colis ", Colis.class).getResultList();
+    }
+}
