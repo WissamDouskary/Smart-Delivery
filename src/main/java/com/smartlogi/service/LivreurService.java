@@ -64,4 +64,9 @@ public class LivreurService {
 
         return livreurRepository.update(livreur, id);
     }
+
+    public boolean deleteLivreur(Long id){
+        Livreur l = livreurRepository.findById(id);
+        return livreurRepository.delete(l);
+    }
 }

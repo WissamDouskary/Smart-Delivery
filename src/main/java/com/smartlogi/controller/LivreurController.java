@@ -38,6 +38,8 @@ public class LivreurController implements Controller {
             return save(request);
         }else if(method.equals("PUT")){
             return update(request, Long.parseLong(idParam));
+        }else if(method.equals("DELETE")){
+            return delete(Long.parseLong(idParam));
         }
         return null;
     }
@@ -88,5 +90,22 @@ public class LivreurController implements Controller {
 
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Livreur.class);
+    }
+
+    public ModelAndView delete(Long id) throws IOException {
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+
+        if(livreurService.findById(id) == null){
+            modelAndView.addObject("error", "Aucune livreur avec id: "+id);
+            return modelAndView;
+        }
+
+        if(livreurService.deleteLivreur(id)){
+            modelAndView.addObject("message", "Livreur supprimer avec succes!");
+            return modelAndView;
+        }else{
+            modelAndView.addObject("error", "error en course de supprission de livreur avec id : "+ id);
+            return modelAndView;
+        }
     }
 }

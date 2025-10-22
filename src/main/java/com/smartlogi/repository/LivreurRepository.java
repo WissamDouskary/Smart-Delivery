@@ -32,4 +32,9 @@ public class LivreurRepository {
         entityManager.merge(l);
         return true;
     }
+
+    public boolean delete(Livreur l){
+        entityManager.remove(l);
+        return true;
+    }
 }
