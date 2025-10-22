@@ -28,12 +28,19 @@ public class LivreurController implements Controller {
 
         String path = request.getRequestURI();
         String[] parts = path.split("/");
-        Long id = Long.parseLong(parts[parts.length - 1]);
 
-        if (id == null) {
-            ModelAndView mav = new ModelAndView("jsonView");
-            mav.addObject("error", "tu perdu le param id sur votre url!");
-            return mav;
+        Long id = null;
+        String lastPart = parts[parts.length - 1];
+        if (lastPart.matches("\\d+")) {
+            id = Long.parseLong(lastPart);
+        }
+
+        if (method.equals("GET")) {
+            if (id != null) {
+                return findById(id);
+            } else {
+                return list();
+            }
         }
 
         if (method.equals("GET")) {
@@ -110,6 +117,12 @@ public class LivreurController implements Controller {
             modelAndView.addObject("error", "error en course de supprission de livreur avec id : " + id);
             return modelAndView;
         }
+    }
+
+    public ModelAndView findById(Long id) throws IOException {
+        Livreur livreur = livreurService.findById(id);
+        ModelAndView mav = new ModelAndView("jsonView");
+        return mav.addObject("Livreur", livreur);
     }
 
     public Livreur readJson(HttpServletRequest request) throws IOException {
