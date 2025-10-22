@@ -72,7 +72,7 @@
     </bean>
 
     <!-- Controller -->
-    <bean name="/livreurs" class="com.smartlogi.controller.LivreurController">
+    <bean name="/livreurs/*" class="com.smartlogi.controller.LivreurController">
         <property name="livreurService" ref="livreurService"/>
     </bean>
 
