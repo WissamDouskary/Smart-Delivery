@@ -23,4 +23,13 @@ public class LivreurRepository {
     public void save(Livreur l){
         entityManager.persist(l);
     }
+
+    public Livreur findById(Long id){
+        return entityManager.find(Livreur.class, id);
+    }
+
+    public boolean update(Livreur l, Long id){
+        entityManager.merge(l);
+        return true;
+    }
 }

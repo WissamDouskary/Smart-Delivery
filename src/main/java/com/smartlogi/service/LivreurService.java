@@ -26,4 +26,42 @@ public class LivreurService {
         livreurRepository.save(l);
         return "La Livreur est ajoute avec succes!";
     }
+
+    public Livreur findById(Long id){
+        return livreurRepository.findById(id);
+    }
+
+    public boolean updateLivreur(Livreur l, Long id){
+        Livreur livreur = findById(id);
+
+        if(livreur == null){
+            return false;
+        }
+
+        for(Livreur liv : findAll()){
+            if(liv.getNom().equals(l.getNom()) && liv.getPrenom().equals(l.getPrenom())){
+                return false;
+            }
+        }
+
+        if(l.getNom() == null){
+            l.setNom(livreur.getNom());
+        }
+        if(l.getPrenom() == null){
+            l.setPrenom(livreur.getPrenom());
+        }
+        if (l.getTelephone() == null){
+            l.setTelephone(livreur.getTelephone());
+        }
+        if (l.getVehicule() == null){
+            l.setVehicule(livreur.getVehicule());
+        }
+
+        livreur.setNom(l.getNom());
+        livreur.setPrenom(l.getPrenom());
+        livreur.setTelephone(l.getTelephone());
+        livreur.setVehicule(l.getVehicule());
+
+        return livreurRepository.update(livreur, id);
+    }
 }
