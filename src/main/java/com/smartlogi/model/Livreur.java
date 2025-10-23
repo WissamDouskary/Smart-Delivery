@@ -16,7 +16,7 @@ public class Livreur {
     private String vehicule;
     private String telephone;
 
-    @OneToMany(mappedBy = "livreur", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "livreur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<Colis> colisList = new ArrayList<>();
 
@@ -28,6 +28,14 @@ public class Livreur {
     }
 
     public Livreur() {}
+
+    public List<Colis> getColisList() {
+        return colisList;
+    }
+
+    public void setColisList(List<Colis> colisList) {
+        this.colisList = colisList;
+    }
 
     public Long getId() {
         return id;

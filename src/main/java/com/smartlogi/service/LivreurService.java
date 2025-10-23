@@ -31,7 +31,7 @@ public class LivreurService {
         return livreurRepository.findById(id).orElse(null);
     }
 
-    public boolean updateLivreur(Livreur l, Long id){
+    public boolean modifyLivreur(Livreur l, Long id){
         Livreur livreur = findById(id);
 
         if(livreur == null){

@@ -45,6 +45,8 @@ public class ColisController implements Controller {
             return save(request);
         }else if(method.equals("PUT")){
             return update(request, id);
+        }else if (method.equals("DELETE")){
+            return delete(id);
         }
 
         return null;
@@ -84,6 +86,15 @@ public class ColisController implements Controller {
             return mav.addObject("message", "colis modifie avec succes!");
         }else{
             return mav.addObject("error", "error en modifie la colie!");
+        }
+    }
+
+    public ModelAndView delete(Long id) throws IOException {
+        ModelAndView mav = new ModelAndView("jsonView");
+        if(colisService.deleteById(id)){
+            return mav.addObject("message", "colis supprimer avec success!");
+        }else{
+            return mav.addObject("error", "error en suppression la colie!");
         }
     }
 

@@ -2,7 +2,6 @@ package com.smartlogi.controller;
 
 import com.smartlogi.model.Livreur;
 import com.smartlogi.service.LivreurService;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -84,7 +83,7 @@ public class LivreurController implements Controller {
             Livreur livreur = readJson(request);
             livreur.setId(id);
 
-            if (livreurService.updateLivreur(livreur, id)) {
+            if (livreurService.modifyLivreur(livreur, id)) {
                 mav.addObject("message", "Livreur modifié avec succès");
                 mav.addObject("livreur", livreur);
             } else {

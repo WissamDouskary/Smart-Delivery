@@ -4,6 +4,7 @@ import com.smartlogi.model.Colis;
 import com.smartlogi.model.Livreur;
 import com.smartlogi.repository.ColisRepository;
 import com.smartlogi.repository.LivreurRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -59,7 +60,10 @@ public class ColisService {
         return true;
     }
 
-    public boolean delete(Colis c) {
+    @Transactional
+    public boolean deleteById(Long id) {
+        Colis c = colisRepository.findById(id).orElse(null);
+        if (c == null) return false;
         colisRepository.delete(c);
         return true;
     }
