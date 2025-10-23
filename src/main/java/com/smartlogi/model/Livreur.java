@@ -1,6 +1,10 @@
 package com.smartlogi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Livreur {
@@ -11,6 +15,10 @@ public class Livreur {
     private String prenom;
     private String vehicule;
     private String telephone;
+
+    @OneToMany(mappedBy = "livreur", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Colis> colisList = new ArrayList<>();
 
     public Livreur(String nom, String prenom, String vehicule, String telephone) {
         this.nom = nom;

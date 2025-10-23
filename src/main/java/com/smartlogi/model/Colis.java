@@ -1,5 +1,6 @@
 package com.smartlogi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,7 @@ public class Colis {
 
     @ManyToOne
     @JoinColumn(name = "livreur_id")
+    @JsonBackReference
     private Livreur livreur;
 
     public Colis(String destinataire, String adresse, double poids, String statut, Livreur livreur) {

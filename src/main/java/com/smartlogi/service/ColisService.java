@@ -34,12 +34,6 @@ public class ColisService {
 
         Long livreurId = c.getLivreur().getId();
         Livreur livreur = livreurRepository.findById(livreurId).orElse(null);
-
-        for (Colis colis : findAll()) {
-            if (colis.getLivreur() != null && colis.getLivreur().getId().equals(livreurId)) {
-                return false;
-            }
-        }
         c.setLivreur(livreur);
 
         colisRepository.save(c);
