@@ -2,11 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans
            https://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/tx
-           https://www.springframework.org/schema/tx/spring-tx.xsd">
+           https://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/data/jpa
+           https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <!-- Enable component scanning for repositories -->
+    <context:annotation-config/>
 
     <!-- DataSource for PostgreSQL -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -29,53 +38,27 @@
         </property>
     </bean>
 
-    <!-- Shared EntityManager -->
-    <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
-
     <!-- Transaction Manager -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-            <tx:method name="*" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
+    <!-- Enable Spring Data JPA Repositories -->
+    <jpa:repositories base-package="com.smartlogi.repository"
+                      entity-manager-factory-ref="entityManagerFactory"
+                      transaction-manager-ref="transactionManager"
+                      query-lookup-strategy="create-if-not-found"/>
 
-    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-        <property name="beanNames">
-            <list>
-                <value>*Service</value>
-            </list>
-        </property>
-        <property name="interceptorNames">
-            <list>
-                <value>txAdvice</value>
-            </list>
-        </property>
-    </bean>
-
-    <!-- Repository -->
-    <bean id="livreurRepository" class="com.smartlogi.repository.LivreurRepository">
-        <property name="entityManager" ref="entityManager"/>
-    </bean>
-    <bean id="colisRepository" class="com.smartlogi.repository.ColisRepository">
-        <property name="entityManager" ref="entityManager"/>
-    </bean>
+    <!-- Enable Transaction Annotations -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <!-- Service -->
     <bean id="livreurService" class="com.smartlogi.service.LivreurService">
         <property name="livreurRepository" ref="livreurRepository"/>
     </bean>
-    <bean id="colisService" class="com.smartlogi.service.ColisService">
-        <property name="colisRepository" ref="colisRepository"/>
-    </bean>
+<!--    <bean id="colisService" class="com.smartlogi.service.ColisService">-->
+<!--        <property name="colisRepository" ref="colisRepository"/>-->
+<!--    </bean>-->
 
     <!-- Controller -->
     <bean name="/livreurs" class="com.smartlogi.controller.LivreurController">
@@ -85,13 +68,12 @@
         <property name="livreurService" ref="livreurService"/>
     </bean>
 
-
-    <bean name="/colis/*" class="com.smartlogi.controller.ColisController">
-        <property name="colisService" ref="colisService" />
-    </bean>
-    <bean name="/colis" class="com.smartlogi.controller.ColisController">
-        <property name="colisService" ref="colisService" />
-    </bean>
+<!--    <bean name="/colis/*" class="com.smartlogi.controller.ColisController">-->
+<!--        <property name="colisService" ref="colisService" />-->
+<!--    </bean>-->
+<!--    <bean name="/colis" class="com.smartlogi.controller.ColisController">-->
+<!--        <property name="colisService" ref="colisService" />-->
+<!--    </bean>-->
 
     <!-- Handler Mapping -->
     <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>

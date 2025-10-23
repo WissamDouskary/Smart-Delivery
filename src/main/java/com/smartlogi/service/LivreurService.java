@@ -28,7 +28,7 @@ public class LivreurService {
     }
 
     public Livreur findById(Long id){
-        return livreurRepository.findById(id);
+        return livreurRepository.findById(id).orElse(null);
     }
 
     public boolean updateLivreur(Livreur l, Long id){
@@ -62,11 +62,13 @@ public class LivreurService {
         livreur.setTelephone(l.getTelephone());
         livreur.setVehicule(l.getVehicule());
 
-        return livreurRepository.update(livreur, id);
+        livreurRepository.save(livreur);
+        return true;
     }
 
     public boolean deleteLivreur(Long id){
-        Livreur l = livreurRepository.findById(id);
-        return livreurRepository.delete(l);
+        Livreur l = livreurRepository.findById(id).orElse(null);
+        livreurRepository.delete(l);
+        return true;
     }
 }

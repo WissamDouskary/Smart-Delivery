@@ -43,9 +43,7 @@ public class LivreurController implements Controller {
             }
         }
 
-        if (method.equals("GET")) {
-            return list();
-        } else if (method.equals("POST")) {
+        if (method.equals("POST")) {
             return save(request);
         } else if (method.equals("PUT")) {
             return update(request, id);
