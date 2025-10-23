@@ -24,7 +24,6 @@ public class LivreurController implements Controller {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String method = request.getMethod();
-        String idParam = request.getParameter("id");
 
         String path = request.getRequestURI();
         String[] parts = path.split("/");

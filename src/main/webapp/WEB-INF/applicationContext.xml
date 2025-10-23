@@ -56,9 +56,10 @@
     <bean id="livreurService" class="com.smartlogi.service.LivreurService">
         <property name="livreurRepository" ref="livreurRepository"/>
     </bean>
-<!--    <bean id="colisService" class="com.smartlogi.service.ColisService">-->
-<!--        <property name="colisRepository" ref="colisRepository"/>-->
-<!--    </bean>-->
+    <bean id="colisService" class="com.smartlogi.service.ColisService">
+        <property name="colisRepository" ref="colisRepository"/>
+        <constructor-arg ref="livreurRepository" />
+    </bean>
 
     <!-- Controller -->
     <bean name="/livreurs" class="com.smartlogi.controller.LivreurController">
@@ -68,12 +69,12 @@
         <property name="livreurService" ref="livreurService"/>
     </bean>
 
-<!--    <bean name="/colis/*" class="com.smartlogi.controller.ColisController">-->
-<!--        <property name="colisService" ref="colisService" />-->
-<!--    </bean>-->
-<!--    <bean name="/colis" class="com.smartlogi.controller.ColisController">-->
-<!--        <property name="colisService" ref="colisService" />-->
-<!--    </bean>-->
+    <bean name="/colis/*" class="com.smartlogi.controller.ColisController">
+        <property name="colisService" ref="colisService" />
+    </bean>
+    <bean name="/colis" class="com.smartlogi.controller.ColisController">
+        <property name="colisService" ref="colisService" />
+    </bean>
 
     <!-- Handler Mapping -->
     <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
