@@ -43,6 +43,8 @@ public class ColisController implements Controller {
             }
         } else if(method.equals("POST")){
             return save(request);
+        }else if(method.equals("PUT")){
+            return update(request, id);
         }
 
         return null;
@@ -73,6 +75,16 @@ public class ColisController implements Controller {
             return mav.addObject("error", "ce livreur deja avait une colis!");
         }
 
+    }
+
+    public ModelAndView update(HttpServletRequest request, Long id) throws IOException {
+        Colis c = readJson(request);
+        ModelAndView mav = new ModelAndView("jsonView");
+        if(colisService.modify(c, id)){
+            return mav.addObject("message", "colis modifie avec succes!");
+        }else{
+            return mav.addObject("error", "error en modifie la colie!");
+        }
     }
 
     public Colis readJson(HttpServletRequest request) throws IOException {

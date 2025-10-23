@@ -48,20 +48,20 @@ public class ColisService {
 
     public boolean modify(Colis newColie, Long id) {
         Colis oldColis = findByIdColis(id);
+        if (oldColis == null) return false;
 
-        if (newColie.getStatut() == null) {
-            newColie.setStatut(oldColis.getStatut());
-        } else if (newColie.getPoids() == 0) {
-            newColie.setPoids(oldColis.getPoids());
-        } else if (newColie.getLivreur() == null) {
-            newColie.setLivreur(oldColis.getLivreur());
-        } else if (newColie.getDestinataire() == null) {
-            newColie.setDestinataire(oldColis.getDestinataire());
-        } else if (newColie.getAdresse() == null) {
-            newColie.setAdresse(newColie.getAdresse());
-        }
+        if (newColie.getAdresse() != null)
+            oldColis.setAdresse(newColie.getAdresse());
+        if (newColie.getDestinataire() != null)
+            oldColis.setDestinataire(newColie.getDestinataire());
+        if (newColie.getLivreur() != null)
+            oldColis.setLivreur(newColie.getLivreur());
+        if (newColie.getPoids() != 0)
+            oldColis.setPoids(newColie.getPoids());
+        if (newColie.getStatut() != null)
+            oldColis.setStatut(newColie.getStatut());
 
-        colisRepository.save(newColie);
+        colisRepository.save(oldColis);
         return true;
     }
 
