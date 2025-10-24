@@ -16,7 +16,7 @@ public class Livreur {
     private String vehicule;
     private String telephone;
 
-    @OneToMany(mappedBy = "livreur", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "livreur", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Colis> colisList = new ArrayList<>();
 
